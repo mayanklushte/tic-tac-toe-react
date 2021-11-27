@@ -16,12 +16,24 @@ export default () => {
     null,
   ]);
 
+  let [isXNext, setIsXNext] = useState(true)
+  console.log(board);
+
   let handleSquareClick = (position) => {
-    board[position] = "x";
+    setBoard((prev) => {
+      console.log(prev);
+      return prev.map((square, pos) => {
+        if (pos === position) {
+          return isXNext ? "X":'O';
+        }
+        return square;
+      });
+    });
 
-    let new_board = board;
-
-    setBoard(new_board);
+    setIsXNext((prev) => {
+      console.log(prev)
+      return !prev
+    });
   };
 
   return (
