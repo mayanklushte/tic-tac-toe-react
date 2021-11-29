@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import calculateWinners from './helpers'
 
 import Boards from "./components/Boards";
 import "./index.scss";
@@ -16,12 +17,22 @@ export default () => {
     null,
   ]);
 
+
+
+
   let [isXNext, setIsXNext] = useState(true)
-  console.log(board);
+
+  let result = calculateWinners(board);
+
+  let head_2 = result ? `Winner is ${result}` : `Next Player is: ${isXNext ? 'X': 'O'}`
+
 
   let handleSquareClick = (position) => {
+    if (result) {
+      return;
+    }
     setBoard((prev) => {
-      console.log(prev);
+      
       return prev.map((square, pos) => {
         if (pos === position) {
           return isXNext ? "X":'O';
@@ -31,14 +42,17 @@ export default () => {
     });
 
     setIsXNext((prev) => {
-      console.log(prev)
+      
       return !prev
     });
   };
 
+  
+
   return (
     <>
       <h1>Tic Tac Toe</h1>
+      <h2>{head_2}</h2>
       <Boards board={board} handleSquareClick={handleSquareClick} />
     </>
   );
